@@ -15,7 +15,6 @@ DEFAULT_CONFIG = {
 }
 config = {}
 
-
 def load_config():
     global config
 
@@ -48,8 +47,7 @@ def load_config():
     config["max_count"] = load_key(parser, "max_count", "int")
     config["debug_print"] = load_key(parser, "debug_print", "bool")
 
-
-keyboard = Controller()
+keyboard = None
 
 def blink_caps_lock():
     keyboard.press(Key.caps_lock)
@@ -62,7 +60,12 @@ def blink_caps_lock():
 def main():
     load_config()
     print(config)
-    
+    update_interval = config["main_cycle_delay"] * config["max_count"]
+    print(f"Update interval: {update_interval} second(s)")
+
+    global keyboard
+    keyboard = Controller()
+
     count = 0
     prev_last_input_info = 0
 
@@ -73,7 +76,7 @@ def main():
             count += 1
             if count == config["max_count"]:
                 if config["debug_print"]:
-                    print("lock screen time!")
+                    print("Update time!")
                 blink_caps_lock()
         else:
             count = 0
