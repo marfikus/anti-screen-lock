@@ -11,6 +11,7 @@ DEFAULT_CONFIG = {
     # 30 x 6 = 180 seconds = 3 min
     "main_cycle_delay": 30,
     "max_count": 6,
+    "blink_caps_lock_delay": 0.0,
     "debug_print": True,
 }
 config = {}
@@ -45,6 +46,7 @@ def load_config():
 
     config["main_cycle_delay"] = load_key(parser, "main_cycle_delay", "int")
     config["max_count"] = load_key(parser, "max_count", "int")
+    config["blink_caps_lock_delay"] = load_key(parser, "blink_caps_lock_delay", "float")
     config["debug_print"] = load_key(parser, "debug_print", "bool")
 
 keyboard = None
@@ -52,7 +54,8 @@ keyboard = None
 def blink_caps_lock():
     keyboard.press(Key.caps_lock)
     keyboard.release(Key.caps_lock)
-    # time.sleep(0.2)
+    if config["blink_caps_lock_delay"] > 0:
+        time.sleep(config["blink_caps_lock_delay"])
     keyboard.press(Key.caps_lock)
     keyboard.release(Key.caps_lock)
 
