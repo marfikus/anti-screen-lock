@@ -49,7 +49,12 @@ def load_config():
     config["blink_caps_lock_delay"] = load_key(parser, "blink_caps_lock_delay", "float")
     config["debug_print"] = load_key(parser, "debug_print", "bool")
 
+
 keyboard = None
+
+def init_keyboard():
+    global keyboard
+    keyboard = Controller()
 
 def blink_caps_lock():
     keyboard.press(Key.caps_lock)
@@ -66,8 +71,7 @@ def main():
     update_interval = config["main_cycle_delay"] * config["max_count"]
     print(f"Update interval: {update_interval} second(s)")
 
-    global keyboard
-    keyboard = Controller()
+    init_keyboard()
 
     count = 0
     prev_last_input_info = 0
