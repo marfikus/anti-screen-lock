@@ -77,10 +77,13 @@ def main():
     prev_last_input_info = 0
 
     while True:
+        # получаем инфу о последней активности
         last_input_info = win32api.GetLastInputInfo()
 
+        # если активности не было, то увеличиваем счетчик
         if last_input_info == prev_last_input_info:
             count += 1
+            # если счетчик достиг порогового значения, то имитируем активность (моргаем капслоком)
             if count == config["max_count"]:
                 if config["debug_print"]:
                     print("Update time!")
@@ -88,6 +91,7 @@ def main():
         else:
             count = 0
 
+        # запоминаем значение последней активности и засыпаем
         prev_last_input_info = last_input_info
         time.sleep(config["main_cycle_delay"])
 
