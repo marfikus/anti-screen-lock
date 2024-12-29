@@ -6,6 +6,8 @@ from pynput.keyboard import Key, Controller
 import configparser
 
 
+PROGRAM_VERSION = "1.0.1"
+
 CONFIG_FILE = "anti_screen_lock.ini"
 DEFAULT_CONFIG = {
     # 30 x 6 = 180 seconds = 3 min
@@ -66,8 +68,10 @@ def blink_caps_lock():
 
 
 def main():
+    print(f"Program version: {PROGRAM_VERSION}")
     load_config()
-    print(config)
+    print(f"Current configuration: \n{config}")
+
     update_interval = config["main_cycle_delay"] * config["max_count"]
     print(f"Update interval: {update_interval} second(s)")
 
